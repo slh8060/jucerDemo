@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="result"></div>
+
+<script id="tpl" type="text/template">
+
+    <ul>
+        {@each list as it,index}
+        <li>${it.name}(index:${index})</li>
+        {@/each}
+        <fieldset>
+            {@each blah as it}
+            <li>
+                num:${it.num} <br/>
+                {@if it.num == 3}
+                {@each it.inner as it2}
+                ${it2.time} <br/>
+                {@/each}
+                {@/if}
+            </li>
+            {@/each}
+        </fieldset>
+    </ul>
+</script>
+<script src="js/jquery-3.1.0.js"></script>
+<script src="js/juicer-min.js"></script>
+<script>
+    var data = {
+        list: [
+            {name: 'guokai', show: true},
+            {name: ' benben', show: false},
+            {name: ' dierbaby', show: true}
+        ],
+        blah: [
+            {num: 1},
+            {num: 2},
+            {
+                num: 3, inner: [
+                {'time': '15:00'},
+                {'time': '16:00'},
+                {'time': '17:00'},
+                {'time': '18:00'}
+            ]
+            },
+            {num: 4}
+        ]
+    };
+
+    var tpl = document.getElementById('tpl').innerHTML;
+   /* var html = juicer(tpl, data); //得到渲染结果，需要放到DOM元素中才能在页面中显示
+    $('#result').html(html)*/
+   var compiled_tpl = juicer(tpl);
+    var html = compiled_tpl.render(data);
+    $('#result').html(html)
+
+
+</script>
+
+
+
+</body>
+</html>
